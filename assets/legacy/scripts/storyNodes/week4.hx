@@ -2,6 +2,7 @@ import funkin.utils.CameraUtil;
 import funkin.utils.MathUtil;
 import funkin.data.FinaleState;
 import funkin.data.WeekData;
+import funkin.states.StoryMenuState;
 
 var pibby:ChromaticAberration;
 
