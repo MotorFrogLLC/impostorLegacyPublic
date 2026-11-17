@@ -52,7 +52,7 @@ class StoryNode extends BaseNode {
 			}
 			else
 			{
-				curScript.set('StoryMenuState', StoryMenuState);
+				curScript.setImport('StoryMenuState', StoryMenuState);
 				curScript.addParent(this);
 				
 				curScript.tryExecute();

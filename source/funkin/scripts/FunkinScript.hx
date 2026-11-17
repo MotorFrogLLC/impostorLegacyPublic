@@ -154,6 +154,7 @@ class FunkinScript extends insanity.Script implements IFlxDestroyable
 		
 		this.modFolder = modFolder;
 		
+		setDefaults();
 		if (additionalVars != null)
 		{
 			for (key => obj in additionalVars)
@@ -202,12 +203,15 @@ class FunkinScript extends insanity.Script implements IFlxDestroyable
 		return call(func, parameters ?? []);
 	}
 	
+	public inline function setImport(name:String, type:Dynamic):Void
+	{
+		return interp.imports.set(name, type);
+	}
+	
 	@:inheritDoc
 	public override function setDefaults():Void
 	{
 		super.setDefaults();
-		
-		var setImport = interp.imports.set;
 		
 		set("script", this);
 		set('modFolder', modFolder);
@@ -215,12 +219,8 @@ class FunkinScript extends insanity.Script implements IFlxDestroyable
 		set('curBpm', Conductor.bpm);
 		set('version', Main.NMV_VERSION.trim());
 		
-		set("keyToString", (key:Int) -> {
-			return flixel.input.keyboard.FlxKey.toStringMap.get(key);
-		});
-		set("keyFromString", (str:String) -> {
-			return flixel.input.keyboard.FlxKey.fromStringMap.get(str);
-		});
+		set("keyToString", (key:Int) -> flixel.input.keyboard.FlxKey.toStringMap.get(key));
+		set("keyFromString", (str:String) -> flixel.input.keyboard.FlxKey.fromStringMap.get(str));
 		
 		// for compat
 		setImport('HScriptState', funkin.scripting.ScriptedState);
@@ -355,21 +355,41 @@ class FunkinScript extends insanity.Script implements IFlxDestroyable
 	}
 	
 	// compattttt
-	public function tryExecute():Void
+	public inline function tryExecute():Void
 	{
-		start();
+		failed = false;
+		
+		try
+		{
+			if (program == null) throw 'Program is uninitialized';
+			
+			if (interp.environment != null)
+			{
+				for (k => v in interp.environment.variables)
+				{
+					if (!variables.exists(k)) variables.set(k, v);
+				}
+			}
+			
+			interp.execute(program);
+		}
+		catch (e:haxe.Exception)
+		{
+			onProgramError(e);
+			failed = true;
+		}
 	}
 	
-	public function get(field:String):Dynamic
+	public inline function get(field:String):Dynamic
 	{
 		return variables.get(field);
 	}
-	public function set(field:String, v:Dynamic):Dynamic
+	public inline function set(field:String, v:Dynamic):Dynamic
 	{
 		variables.set(field, v);
 		return v;
 	}
-	public function exists(field:String):Bool
+	public inline function exists(field:String):Bool
 	{
 		return variables.exists(field);
 	}

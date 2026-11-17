@@ -83,7 +83,7 @@ class CosmicubeNode extends BaseNode
 			}
 			else
 			{
-				curScript.set('CosmicubeData', CosmicubeData);
+				curScript.setImport('CosmicubeData', CosmicubeData);
 				curScript.addParent(this);
 				
 				curScript.tryExecute();
