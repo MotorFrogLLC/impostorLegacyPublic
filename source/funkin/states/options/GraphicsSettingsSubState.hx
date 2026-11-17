@@ -39,8 +39,8 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		var option:Option = new Option(Lang.str('opt_debugdisplaytype', 'Debug Display Type'),
 			Lang.str('opt_debugdisplaytype_desc',
 				'Handles what type of information to display in the top left of your screen.\nSimple displays FPS & Memory, and advanced displays the same alongside debug information.\nDisabled disables the counter entirely.'),
-			'fpsDisplayType', 'string', 'Simple', [Lang.str('choice_debug_simple', 'Simple'), Lang.str('choice_debug_advanced', 'Advanced'), Lang.str('choice_generic_disabled', 'Disabled')],
-			['Simple', 'Advanced', 'Disabled']);
+			'fpsDisplayType', 'string', 'Simple', [Lang.str('choice_debug_fps', 'FPS'), Lang.str('choice_debug_simple', 'Simple'), Lang.str('choice_debug_advanced', 'Advanced'), Lang.str('choice_generic_disabled', 'Disabled')],
+			['FPS', 'Simple', 'Advanced', 'Disabled']);
 		addOption(option);
 		#end
 		

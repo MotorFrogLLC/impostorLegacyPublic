@@ -641,6 +641,7 @@
 		"choice_generic_disabled": "Disabled",
 		"choice_generic_enabled": "Enabled",
 		
+		"choice_debug_fps": "FPS",
 		"choice_debug_simple": "Simple",
 		"choice_debug_advanced": "Advanced",
 		

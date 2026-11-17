@@ -5,6 +5,7 @@ import openfl.display.Bitmap;
 import openfl.text.TextField;
 import openfl.text.TextFormat;
 import openfl.Assets;
+import openfl.Lib;
 import openfl.display.Sprite;
 
 import flixel.util.FlxStringUtil;
@@ -15,46 +16,23 @@ import insanity.custom.InsanityType;
 /**
  * enum that handles the display type of the FPS counter.
  */
-class FpsDisplayMode
-{
-	// if we wanna abuse the abstract part more go back to a abstract
-	// inline static finals get inlined with less garbage than abstract inlines for whatever reason so consider this the most minute optimization ever
+enum abstract FpsDisplayMode(Int) to Int {
+	var DISABLED;
+	var FPS;
+	var SIMPLE;
+	var ADVANCED;
 	
-	/**
-	 * The Fps counter will not be shown.
-	 */
-	public static inline final DISABLED:Int = 0;
-	
-	/**
-	 * The Fps counter will show Fps and Memory.
-	 */
-	public static inline final SIMPLE:Int = 1;
-	
-	/**
-	 * The Fps counter will additional info per state.
-	 */
-	public static inline final ADVANCED:Int = 2;
-	
-	public static inline function fromString(str:String):Int
+	public static inline function fromString(str:String):FpsDisplayMode
 	{
-		return switch (str)
+		return switch (str.toLowerCase())
 		{
-			case 'Advanced': ADVANCED;
-			case 'Simple': SIMPLE;
+			case 'advanced': ADVANCED;
+			case 'simple': SIMPLE;
+			case 'fps': FPS;
 			default: DISABLED;
 		}
 	}
 }
-
-// /**
-//  * enum that handles the display type of the FPS counter.
-//  */
-// enum abstract FpsDisplayMode(Int) from Int to Int
-// {
-// 	var DISABLED;
-// 	var SIMPLE;
-// 	var ADVANCED;
-// }
 
 /**
  * A FL Sprite that displays the current FPS and GC memory
@@ -74,7 +52,7 @@ class DebugDisplay extends Sprite
 		if (FlxG.game?.parent == null || instance != null) return;
 		
 		instance = new DebugDisplay(10, 3, 0xFFFFFF);
-		instance.visible = instance.displayType != FpsDisplayMode.DISABLED;
+		instance.visible = (instance.displayType != FpsDisplayMode.DISABLED);
 		
 		FlxG.game.parent.addChild(instance);
 	}
@@ -134,8 +112,7 @@ class DebugDisplay extends Sprite
 		textField.mouseEnabled = false;
 		textField.defaultTextFormat = textFormat;
 		textField.autoSize = LEFT;
-		textField.multiline = true;
-		textField.text = "FPS: ";
+		textField.text = "";
 		
 		displayType = FpsDisplayMode.fromString(ClientPrefs.fpsDisplayType);
 		
@@ -158,10 +135,9 @@ class DebugDisplay extends Sprite
 	// Event Handlers
 	override function __enterFrame(deltaTime:Float):Void
 	{
-		final now:Float = haxe.Timer.stamp() * 1000;
+		final now:Float = Lib.getTimer();
 		times.push(now);
-		while (times[0] < now - 1000)
-			times.shift();
+		while (times[0] < now - 1000) times.shift();
 			
 		// prevents the overlay from updating every frame, why would you need to anyways @crowplexus
 		if (deltaTimeout < 100)
@@ -172,8 +148,8 @@ class DebugDisplay extends Sprite
 		
 		currentFPS = times.length;
 		updateText();
-		textUnderlay.width = textField.width + 3;
-		textUnderlay.height = textField.height + (displayType == FpsDisplayMode.ADVANCED ? 0 : -5);
+		textUnderlay.width = (textField.textWidth + 6);
+		textUnderlay.height = (textField.textHeight + 1);
 		
 		deltaTimeout = 0.0;
 	}
@@ -191,53 +167,62 @@ class DebugDisplay extends Sprite
 	function __updateText()
 	{
 		displayType = FpsDisplayMode.fromString(ClientPrefs.fpsDisplayType);
-		visible = displayType != FpsDisplayMode.DISABLED;
+		visible = (displayType != DISABLED);
 		
-		if (!canUpdate || (displayType == FpsDisplayMode.DISABLED)) return;
+		if (!canUpdate) return;
 		
-		#if cpp
-		var str = 'FPS: $currentFPS • [GC: ${FlxStringUtil.formatBytes(gcMemory)} | Task: ${FlxStringUtil.formatBytes(taskMemory)}]';
-		#else
-		var str = 'FPS: $currentFPS • [GC: ${FlxStringUtil.formatBytes(gcMemory)}]'; // exciting
-		#end
-		
-		if (displayType == FpsDisplayMode.ADVANCED)
+		switch (displayType)
 		{
-			if (FlxG.state != null && _state != FlxG.state)
-			{
-				if (FlxG.state is funkin.scripting.ScriptedState)
+			case DISABLED: return;
+				
+			case FPS #if (!cpp) | SIMPLE #end:
+				textField.text = '$currentFPS FPS';
+				
+			#if cpp
+			case SIMPLE:
+				textField.text = '$currentFPS FPS  ·  ${FlxStringUtil.formatBytes(taskMemory)}';
+			#end
+				
+			case ADVANCED:
+				var str:String = ('$currentFPS FPS  ·  ${FlxStringUtil.formatBytes(gcMemory)} gc' #if cpp + '  ·  ${FlxStringUtil.formatBytes(taskMemory)} task' #end);
+				
+				if (FlxG.state != null && _state != FlxG.state)
 				{
-					var scripted:funkin.scripting.ScriptedState = cast FlxG.state;
-					var path:String = funkin.scripts.FunkinScript.getPath('scripts/states/${scripted.scriptName}');
-					#if ASSET_REDIRECT path = path.replace(Paths.trail, ''); #end
-					stateName = 'ScriptedState • (${path.replace('scripts/states/', '../../')})';
+					if (FlxG.state is funkin.scripting.ScriptedState)
+					{
+						var scripted:funkin.scripting.ScriptedState = cast (_state = FlxG.state);
+						var path:String = funkin.scripts.FunkinScript.getPath('scripts/states/${scripted.scriptName}');
+						#if ASSET_REDIRECT path = path.replace(Paths.trail, ''); #end
+						stateName = 'ScriptedState · (${path.replace('scripts/states/', '../../')})';
+					}
+					else
+					{
+						stateName = InsanityType.getClassName(InsanityType.getClass(_state = FlxG.state));
+					}
 				}
-				else
+				
+				str += '  ·  $stateName';
+				
+				for (fun in plugins)
 				{
-					stateName = InsanityType.getClassName(InsanityType.getClass(_state = FlxG.state));
+					try
+					{
+						final pluginStr:Null<String> = fun();
+						
+						if (pluginStr != null && pluginStr.length > 0) str += '\n$pluginStr';
+					}
+					catch (e)
+					{
+						Logger.log('Error on debug display plugin: $e', ERROR, true);
+						
+						plugins.remove(fun);
+					}
 				}
-			}
-			
-			str += ' • $stateName';
-			
-			for (fun in plugins)
-			{
-				try
-				{
-					final pluginStr:Null<String> = fun();
-					
-					if (pluginStr != null && pluginStr.length > 0) str += '\n$pluginStr';
-				}
-				catch (e)
-				{
-					Logger.log('Error on debug display plugin: $e', ERROR, true);
-					
-					plugins.remove(fun);
-				}
-			}
+				
+				textField.text = str;
+				
+			default:
 		}
-		
-		textField.text = str;
 	}
 	
 	inline function get_gcMemory():Float
