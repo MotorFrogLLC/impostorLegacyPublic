@@ -12,51 +12,67 @@ import lime.ui.GamepadButton as LimeGamepadButton;
  */
 class FlxGamepadUtil
 {
-	public static function getInputID(gamepad:FlxGamepad, button:LimeGamepadButton):FlxGamepadInputID
+	// FLX_GAMEINPUT_API internally assigns 6 axes to IDs 0-5, which LimeGamepadButton doesn't account for, so we need to offset the ID by 6.
+	public static final BUTTON_OFFSET:Int = 6;
+	
+	/**
+	 * Resolves Flixel input ID from a Lime gamepad button ID
+	 * @param	gamepad		Flixel gamepad
+	 * @param	button		Lime button ID
+	 */
+	public static inline function getButtonInputID(gamepad:FlxGamepad, button:LimeGamepadButton):FlxGamepadInputID
 	{
-		#if FLX_GAMEINPUT_API
-		// FLX_GAMEINPUT_API internally assigns 6 axes to IDs 0-5, which LimeGamepadButton doesn't account for, so we need to offset the ID by 6.
-		final OFFSET:Int = 6;
-		#else
-		final OFFSET:Int = 0;
-		#end
-		
-		var result:FlxGamepadInputID = gamepad.mapping.getID(button + OFFSET);
-		if (result == NONE) return NONE;
-		return result;
+		return (gamepad.mapping.getID(button + BUTTON_OFFSET) ?? NONE);
 	}
 	
-	public static function getLimeGamepad(input:FlxGamepad):Null<LimeGamepad>
+	/**
+	 * Resolves Flixel input ID from a Lime gamepad axis ID and value
+	 * @param	gamepad		Flixel gamepad
+	 * @param	button		Lime axis ID
+	 * @param	x			Axis value
+	 */
+	public static inline function getAxisInputID(gamepad:FlxGamepad, axis:LimeGamepadAxis, x:Float):FlxGamepadInputID
 	{
-		#if FLX_GAMEINPUT_API
+		return switch (axis)
+		{
+			case LEFT_X: (x < 0 ? LEFT_STICK_DIGITAL_LEFT : LEFT_STICK_DIGITAL_RIGHT);
+			case LEFT_Y: (x < 0 ? LEFT_STICK_DIGITAL_UP : LEFT_STICK_DIGITAL_DOWN);
+			
+			case RIGHT_X: (x < 0 ? RIGHT_STICK_DIGITAL_LEFT : RIGHT_STICK_DIGITAL_RIGHT);
+			case RIGHT_Y: (x < 0 ? RIGHT_STICK_DIGITAL_UP : RIGHT_STICK_DIGITAL_DOWN);
+			
+			default: gamepad.mapping.getID(cast axis);
+		};
+	}
+	
+	/**
+	 * Resolves Lime gamepad from a Flixel gamepad instance
+	 * @param	gamepad		Lime gamepad
+	 */
+	public static function getLimeGamepad(gamepad:FlxGamepad):Null<LimeGamepad>
+	{
+		return @:privateAccess
+		{
+			final gamepadDevice:openfl.ui.GameInputDevice = gamepad?._device;
+			
+			for (gamepad => device in openfl.ui.GameInput.__devices) if (device == gamepadDevice) return gamepad;
+			
+			return null;
+		}
+	}
+	
+	/**
+	 * Resolves Flixel gamepad from a Lime gamepad instance
+	 * @param	gamepad		Flixel gamepad
+	 */
+	public static function getFlxGamepadByLimeGamepad(gamepad:LimeGamepad):FlxGamepad // well this isnt used now but what freaking ever
+	{
 		@:privateAccess
 		{
-			var inputDevice = input?._device;
-			if (inputDevice == null) return null; // apparenty this can get null ? i dont know tbh but it happened to me
+			var gameInputDevice:openfl.ui.GameInputDevice = openfl.ui.GameInput.__getDevice(gamepad);
+			var gamepadIndex:Int = FlxG.gamepads.findGamepadIndex(gameInputDevice);
 			
-			return (inputDevice.__gamepad ?? // for some reason this is NEVER DEFINED IN official openfl libary so just look for it in gameinput
-				{
-					for (gamepad => device in openfl.ui.GameInput.__devices) // fuking stupid
-					{
-						if (device == inputDevice) return gamepad;
-					}
-					
-					return null;
-				});
+			return FlxG.gamepads.getByID(gamepadIndex);
 		}
-		#else
-		return null;
-		#end
-	}
-	
-	@:privateAccess
-	public static function getFlxGamepadByLimeGamepad(gamepad:LimeGamepad):FlxGamepad
-	{
-		// Why is this so elaborate?
-		@:privateAccess
-		var gameInputDevice:openfl.ui.GameInputDevice = openfl.ui.GameInput.__getDevice(gamepad);
-		@:privateAccess
-		var gamepadIndex:Int = FlxG.gamepads.findGamepadIndex(gameInputDevice);
-		return FlxG.gamepads.getByID(gamepadIndex);
 	}
 }

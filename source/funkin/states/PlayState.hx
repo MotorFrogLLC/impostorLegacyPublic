@@ -615,7 +615,7 @@ class PlayState extends MusicBeatState
 		
 		FunkinAssets.cache.clearStoredMemory();
 		
-		funkin.backend.DebugDisplay.addPlugin(() -> 'curStep: $curStep • curBeat: $curBeat • curSection: $curSection');
+		funkin.backend.DebugDisplay.addPlugin(() -> 'curStep: $curStep  ·  curBeat: $curBeat  ·  curSection: $curSection');
 		
 		skipCountdown = false;
 		countdownSounds = true;
@@ -2102,7 +2102,6 @@ class PlayState extends MusicBeatState
 		scripts.call('onUpdate', arg);
 		
 		super.update(elapsed);
-		input.update();
 		
 		if (controls.NOTE_TAUNT_P && !inCutscene && !cpuControlled)
 		{
@@ -3204,6 +3203,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
+		
 		scripts.call('onKeyRelease', [key]);
 		scripts.call('onInputRelease', [key]);
 	}
@@ -3215,23 +3215,9 @@ class PlayState extends MusicBeatState
 	{
 		if (!startedCountdown || !generatedMusic || boyfriend.stunned) return;
 		
-		// HOLDING
-		var anyPressed:Bool = (controls.NOTE_TAUNT && (focusPlayer ?? boyfriend)?.canTaunt);
-		if (!anyPressed) {
-			for (i in 0 ... SONG.keys) {
-				if (!input.inputPressed(i)) continue;
-				
-				anyPressed = true;
-				break;
-			}
-		}
-		
-		var i:Int = notes.length;
-		while (-- i >= 0)
+		for (daNote in notes.members)
 		{
-			final daNote:Note = notes.members[i];
-			
-			if (daNote.alive && daNote.isSustainNote && !daNote.blockHit && !daNote.tooLate && !daNote.playField.autoPlayed
+			if (daNote?.alive && daNote.isSustainNote && !daNote.blockHit && !daNote.tooLate && !daNote.playField.autoPlayed
 				&& daNote.playField.inControl && daNote.playField.playerControls)
 			{
 				final holding:Bool = input.inputPressed(daNote.noteData);
@@ -3256,6 +3242,8 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
+		
+		final anyPressed:Bool = ((controls.NOTE_TAUNT && (focusPlayer ?? boyfriend)?.canTaunt) || input.anyPressed());
 		
 		if (!anyPressed)
 		{

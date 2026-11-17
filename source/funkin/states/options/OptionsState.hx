@@ -279,6 +279,7 @@ class OptionsState extends MusicBeatState
 	function refreshOptionVisuals()
 	{
 		if (blockAllInput) return;
+		
 		for (txt in optionTexts.members)
 		{
 			txt.alpha = 1;
@@ -357,8 +358,6 @@ class OptionsState extends MusicBeatState
 					break;
 				}
 			}
-			
-			refreshOptionVisuals();
 			
 			if (!blockInput && !blockAllInput)
 			{
