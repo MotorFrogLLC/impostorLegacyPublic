@@ -81,6 +81,7 @@ Current version: **1.1.2**
 - "WTF" text in O2 now uses the player characters healthbar color. ([#15](https://github.com/inky03/impostorLegacyPublic/pull/15) by @IdksStuff)
 
 ### Bugfixes
+- Fixed note pooling system
 - Icons readded to cosmicube items
 - Fixed camera cutoff when using Camera Twist event
 - Mods with weeks hidden in Story Mode no longer require song completion by default (rendering them inaccessible without dev flags)

@@ -55,7 +55,6 @@ public var caption:FunkinCaption;
 // CAMERA SHIT
 var camBopInterval:Int = 4;
 var camBopIntensity:Float = 1;
-var twistShit:Float = 1;
 var twistAmount:Float = 1;
 var camTwistIntensity:Float = 0;
 var camTwistIntensity2:Float = 3;
@@ -115,12 +114,13 @@ public function resetCam()
 	bfOff = -1;
 }
 
+var doCamFollow:Bool = ClientPrefs.camFollowsCharacters;
 function onMoveCamera(whosTurn:Bool)
 {
 	// CAMERA SPECIAL THING
 	if (dadOff == -1 && bfOff == -1) return;
 	
-	if (game.camCurTarget == boyfriend) whosTurn = 'boyfriend'; // sure watever i dont care. hmph
+	if (camCurTarget == boyfriend) whosTurn = 'boyfriend'; // sure watever i dont care. hmph
 	
 	if (whosTurn == 'dad')
 	{
@@ -131,8 +131,7 @@ function onMoveCamera(whosTurn:Bool)
 		camFollow.setPosition(bfOff[0], bfOff[1]);
 	}
 	
-	if (startingSong) return;
-	if (ClientPrefs.camFollowsCharacters && canFollow)
+	if (!startingSong && doCamFollow && canFollow)
 	{
 		var character = switch (whosTurn)
 		{
@@ -141,7 +140,7 @@ function onMoveCamera(whosTurn:Bool)
 			default: (playerStrums?.owner ?? boyfriend);
 		}
 		
-		if (game.camCurTarget != null) character = game.camCurTarget; // used for characters that aren't player or opponent
+		if (camCurTarget != null) character = camCurTarget; // used for characters that aren't player or opponent
 		
 		final displacement = character.getSingDisplacement();
 		camFollow.x += displacement.x;
@@ -428,19 +427,12 @@ function onEvent(eventName, value1, value2)
 	}
 }
 
-function onSongStart()
-{
-	//boyfriend = null;
-}
-
 function onStepHit()
 {
 	if (camTwist)
 	{
-		// Because of difference in cameras that I do NOT want to fix, this has to be done in a different way
 		if (curStep % 4 == 0) FlxTween.tween(camHUD, {y: -6 * camTwistIntensity2}, Conductor.stepCrotchet * 0.002, {ease: FlxEase.circOut});
-		
-		if (curStep % 4 == 2) FlxTween.tween(camHUD, {y: 0}, Conductor.stepCrotchet * 0.002, {ease: FlxEase.sineIn});
+		else if (curStep % 4 == 2) FlxTween.tween(camHUD, {y: 0}, Conductor.stepCrotchet * 0.002, {ease: FlxEase.sineIn});
 	}
 }
 
@@ -448,19 +440,13 @@ function onBeatHit()
 {
 	if (camTwist) // && ClientPrefs.flashing
 	{
-		if (curBeat % 2 == 0)
-		{
-			twistShit = twistAmount;
-		}
-		else
-		{
-			twistShit = -twistAmount;
-		}
-		camHUD.scrollAngle = twistShit * camTwistIntensity2;
-		camGame.scrollAngle = twistShit * camTwistIntensity2;
-		FlxTween.tween(camHUD, {scrollAngle: twistShit * camTwistIntensity}, Conductor.stepCrotchet * 0.002, {ease: FlxEase.circOut});
-		FlxTween.tween(camHUD, {x: -twistShit * camTwistIntensity}, Conductor.crochet * 0.001, {ease: FlxEase.linear});
-		FlxTween.tween(camGame, {scrollAngle: twistShit * camTwistIntensity}, Conductor.stepCrotchet * 0.002, {ease: FlxEase.circOut});
-		FlxTween.tween(camGame, {x: -twistShit * camTwistIntensity}, Conductor.crochet * 0.001, {ease: FlxEase.linear});
+		var twist:Float = (curBeat % 2 == 0 ? twistAmount : -twistAmount);
+		
+		camHUD.scrollAngle = camGame.scrollAngle = (twist * camTwistIntensity2);
+		
+		FlxTween.tween(camGame, {scrollAngle: twist * camTwistIntensity}, Conductor.stepCrotchet * 0.002, {ease: FlxEase.circOut});
+		FlxTween.tween(camHUD, {scrollAngle: twist * camTwistIntensity}, Conductor.stepCrotchet * 0.002, {ease: FlxEase.circOut});
+		FlxTween.tween(camGame, {x: -twist * camTwistIntensity}, Conductor.crochet * 0.001, {ease: FlxEase.linear});
+		FlxTween.tween(camHUD, {x: -twist * camTwistIntensity}, Conductor.crochet * 0.001, {ease: FlxEase.linear});
 	}
 }

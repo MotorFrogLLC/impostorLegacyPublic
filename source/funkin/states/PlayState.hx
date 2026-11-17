@@ -1997,16 +1997,9 @@ class PlayState extends MusicBeatState
 					&& !boyfriend.getAnimName().endsWith('miss')) boyfriend.dance(boyfriend.forceDance);
 			}
 			
-			var i:Int = 0;
-			while (i < notes.length)
+			for (daNote in notes.members)
 			{
-				var daNote = notes.members[i ++];
-				
-				if (!daNote.alive) {
-					notes.remove(daNote, true);
-					i --;
-					continue;
-				}
+				if (!daNote.alive) continue;
 				
 				final field = daNote.playField;
 				
@@ -2028,10 +2021,7 @@ class PlayState extends MusicBeatState
 					|| (daNote.wasGoodHit && (Conductor.songPosition >= daNote.strumTime + daNote.sustainLength
 						|| (daNote.isSustainEnd && daNote.clipRect != null && daNote.clipRect.height <= 0)))) field.disposeNote(daNote);
 						
-				if (!canUpdateModchart || !daNote.alive || !daNote.exists) {
-					i --;
-					continue;
-				}
+				if (!canUpdateModchart || !daNote.alive || !daNote.exists) continue;
 				
 				// ok modchart stuff
 				
