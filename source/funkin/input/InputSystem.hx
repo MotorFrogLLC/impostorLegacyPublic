@@ -68,11 +68,11 @@ class InputSystem implements flixel.util.IFlxDestroyable extends openfl.events.E
 	 * Creates a new input system
 	 * @param controls 
 	 */
-	public function new(controls:Controls)
+	public function new(?controls:Controls)
 	{
 		super();
 		
-		this.controls = controls;
+		this.controls = (controls ?? Controls.instance);
 		this.populate(ACTION_LIST);
 		
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyboardInput);
@@ -101,8 +101,6 @@ class InputSystem implements flixel.util.IFlxDestroyable extends openfl.events.E
 				}
 			}
 		}
-		
-		trace(gamepadBinds);
 	}
 	
 	/**
