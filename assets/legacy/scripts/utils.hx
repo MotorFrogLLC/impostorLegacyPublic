@@ -1,5 +1,6 @@
 import funkin.objects.FunkinCaptionGroup;
 import funkin.objects.FunkinCaption;
+import funkin.objects.TaskSong;
 
 import flixel.text.FlxText;
 import flixel.addons.text.FlxTypeText;
@@ -13,8 +14,6 @@ import funkin.utils.ProgressionUtil;
 
 using StringTools;
 
-public var comboX:Float = (ClientPrefs.middleScroll ? 440 : 0); // Offset midscroll bullshit. fuck.
-var combosPadding:Float = 0;
 var flashSprite:FlxSprite;
 var reactorFade:Float = 3;
 public var dbText:String = '';
@@ -32,25 +31,27 @@ public var canFollow:Bool = true;
 /**
  * Does your character have a GF skin?
 **/
-public var hasGfSkin = false;
+public var hasGfSkin = (ClientPrefs.gfSkin != 'default' && !isStoryMode);
 
 /**
  * Does your character have a BF skin?
 **/
-public var hasBfSkin = false;
+public var hasBfSkin = (ClientPrefs.bfSkin != 'default' && !isStoryMode);
 
 /**
  * Does your character have a pet?
 **/
-public var hasPet = false;
+public var hasPet = (ClientPrefs.pet != '' && !isStoryMode);
 
 /**
  * Does your character have Colored UI on?
 **/
-public var hasColor = false;
+public var hasColor = (ClientPrefs.colorText != 'Disabled');
 
 public var captionGroup:FunkinCaptionGroup;
 public var caption:FunkinCaption;
+
+public var taskGroup:TaskSong;
 
 // CAMERA SHIT
 var camBopInterval:Int = 4;
@@ -62,10 +63,8 @@ var camTwist:Bool = false;
 
 function onLoad()
 {
-	hasBfSkin = (ClientPrefs.bfSkin != 'default' && !isStoryMode);
-	hasGfSkin = (ClientPrefs.gfSkin != 'default' && !isStoryMode);
-	hasPet = (ClientPrefs.pet != '' && !isStoryMode);
-	hasColor = (ClientPrefs.colorText != 'Disabled');
+	taskGroup = add(new funkin.objects.TaskSong(0, 200));
+	switchCredits();
 	
 	captionGroup = new FunkinCaptionGroup(500);
 	captionGroup.camera = camOther;
@@ -76,6 +75,7 @@ function onCreatePost()
 	modifyGUI();
 	
 	if (!ClientPrefs.inDevMode) return;
+	
 	var WATERMARK:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menu/pause/looksie_extreme_demon'));
 	WATERMARK.camera = camOther;
 	WATERMARK.alpha = 0.3;
@@ -83,6 +83,17 @@ function onCreatePost()
 	add(WATERMARK);
 	
 	DebugDisplay.addPlugin(() -> ('[ TAB to hide or show debug menu ]' + (showDevInfo ? dbText : '')));
+}
+
+function onCountdownStarted():Void startTaskSong(false);
+
+public function switchCredits(infoName:String = 'info'):Void taskGroup.meta = TaskSong.getMeta(songName, infoName);
+public function startTaskSong(revive:Bool = true):Void
+{
+	if (revive) taskGroup.revive();
+	
+	taskGroup.start();
+	taskGroup.cameras = [camOther];
 }
 
 /**
@@ -150,73 +161,13 @@ function onMoveCamera(whosTurn:Bool)
 
 function modifyGUI()
 {
-	timeBar.setColors(0xFF44d844, 0xFF2e412e);
-	timeTxt.x = PlayState.STRUM_X + (FlxG.width / 2) - 585;
-	timeBar.x = timeTxt.x;
-	timeBar.y = timeTxt.y + (timeTxt.height / 4) - 5;
-	timeTxt.x += 10;
-	timeTxt.y += 8;
-	timeTxt.width = 400;
-	timeTxt.setFormat(Paths.font("vcr.ttf", false), 14, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-	if (hasColor) scoreTxt.color = dad.healthColour;
-	
-	playHUD.ratingPop = (.47 / .42);
-	playHUD.combosPop = (.35 / .33);
-	
 	switch (playHUD.ratingSuffix)
 	{
 		case '-nuzzus':
 			playHUD.ratingScale = 2;
 			playHUD.combosScale = 2;
-		case '-pixel':
-			playHUD.ratingScale = 3;
-			playHUD.combosScale = 3;
-		default:
-			playHUD.ratingScale = .42;
-			playHUD.combosScale = .33;
-			combosPadding = -30;
+			playHUD.combosPadding = 0;
 	}
-}
-
-function onPopUpScorePost(note, rating)
-{
-	if (ClientPrefs.hideHud) return;
-	
-	if (ratingGraphic != null)
-	{
-		// functionality still exists
-		if (ClientPrefs.colorText == 'Enabled DX') ratingGraphic.color = scoreTxt.color;
-		
-		ratingGraphic.x = ((FlxG.width / 2) - (ratingGraphic.width / 2) + comboX);
-		ratingGraphic.y = (ClientPrefs.downScroll ? (FlxG.height - ratingGraphic.height - 50) : 55);
-	}
-	
-	if (ratingNumGroup != null && ratingNumGroup.members != null)
-	{
-		var activeMembers = [for (member in ratingNumGroup.members) if (member != null && member.exists && member.alive) member];
-		
-		var totalDigits = activeMembers.length;
-		var daLoop = 0;
-		var xOffset = 0;
-		
-		var totalWidth = 0;
-		for (m in activeMembers)
-			totalWidth += ((m.frameWidth + combosPadding) * playHUD.combosScale);
-		xOffset = ((FlxG.width - totalWidth) / 2);
-		
-		for (numScore in activeMembers)
-		{
-			if (ClientPrefs.colorText == 'Enabled DX') numScore.color = scoreTxt.color;
-			
-			numScore.x = (xOffset - (numScore.frameWidth + combosPadding) * playHUD.combosScale / 2 /* i call this the Evil factor */ + comboX);
-			numScore.y = (ClientPrefs.downScroll ? (FlxG.height - numScore.height - 117.5) : 122.5);
-			xOffset += ((numScore.frameWidth + combosPadding) * playHUD.combosScale);
-			
-			daLoop++;
-		}
-	}
-	
-	return Function_Continue; // Let original function run
 }
 
 if (ClientPrefs.inDevMode) {
@@ -340,6 +291,9 @@ function onEvent(eventName, value1, value2)
 {
 	switch (eventName)
 	{
+		case 'Legacy' if (value1 == 'Show Task Song'):
+			switchCredits(value2.length > 0 ? value2 : null);
+			startTaskSong();
 		case 'Optional Captions':
 			if (nullBlank(value1) || value1 == '0') return hideCaption();
 			

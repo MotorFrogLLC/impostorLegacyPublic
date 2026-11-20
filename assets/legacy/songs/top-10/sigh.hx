@@ -32,8 +32,6 @@ function onCreatePost():Void
 		{
 			var xf = (j + xf);
 			
-			modManager.updateObject(0, strum, modManager.getPos(0, 0, 0, 0, strum.noteData, i, strum), i);
-			
 			modManager.setValue('transform${j}X', Math.round(((i == 0 ? (ClientPrefs.middleScroll ? 568 : 1020) : 0) + 180 * (j % 4) + 120 - 85) * ratio - strum.x), i);
 			modManager.setValue('transform${j}Y', Math.round(((ClientPrefs.downScroll ? 930 : 150) - 85) * ratio - strum.y), i);
 			
@@ -43,18 +41,21 @@ function onCreatePost():Void
 		xf += playField.keyCount;
 	}
 	
-	if (!ClientPrefs.middleScroll) comboX -= 32;
-	cameraSpeed = 1.25;
+	if (!ClientPrefs.middleScroll)
+	{
+		comboX -= 32;
+		botplayTxt.x -= 40;
+	}
 	
 	// most ofthis is based on decompilwd code lolwaut it wasnt decompiled
 	
+	cameraSpeed = 1.25;
 	camZoomingMult = 0;
 	
 	playHUD.timeBar.kill();
 	playHUD.timeTxt.kill();
 	
 	botplayTxt.setFormat(Paths.font('ariblk.ttf'), 26, FlxColor.WHITE, FlxTextAlign.CENTER);
-	botplayTxt.x -= 40;
 	
 	playHUD.scoreTxt.setFormat(Paths.font('ariblk.ttf'), 26 * ratio, FlxColor.WHITE, FlxTextAlign.RIGHT);
 	playHUD.scoreTxt.setPosition(Math.round(1430 * ratio - playHUD.scoreTxt.width), Math.round((ClientPrefs.downScroll ? 100 : 1010) * ratio - 3));

@@ -100,6 +100,7 @@ function onCreatePost()
 	add(ziffyStart);
 	
 	skipCountdown = true;
+	taskGroup.kill();
 	
 	camGame.targetOffset.y = -100;
 }

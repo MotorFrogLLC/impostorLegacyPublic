@@ -539,6 +539,9 @@ class PlayState extends MusicBeatState
 	public static var missLimit:Bool = false;
 	public var focusPlayer:Null<Character> = null;
 	
+	public var comboX:Float = (ClientPrefs.middleScroll ? 440 : 0); // yeah sure who cares
+	public var comboY:Float = (ClientPrefs.downScroll ? 250 : -250);
+	
 	public var allowBFSkin:Bool;
 	public var allowGFSkin:Bool;
 	public var allowPet:Bool;
@@ -816,7 +819,7 @@ class PlayState extends MusicBeatState
 		
 		scripts.call('preNoteGeneration', []);
 		
-		playHUD ??= new funkin.game.huds.PsychHUD(this);
+		playHUD ??= new funkin.game.huds.ImpostorHUD(this);
 		insert(members.indexOf(playFields), playHUD); // Data told me to do this
 		playHUD.cameras = [camHUD];
 		
@@ -825,30 +828,22 @@ class PlayState extends MusicBeatState
 		if (genNotesBeforeCountdown) generatePlayfields();
 		generateSong(SONG.song);
 		
-		if (!ClientPrefs.opponentStrums || ClientPrefs.middleScroll)
+		for (playField in playFields)
 		{
-			for (playField in playFields)
+			if (playField.isPlayer || ClientPrefs.opponentLaneUnderlay) underlays.add(playField.underlay);
+			
+			if (playField.isPlayer)
 			{
-				if (playField.isPlayer)
-				{
-					if (ClientPrefs.middleScroll) modManager.setValue('opponentSwap', .5, playField.ID);
-					
-					continue;
-				}
+				if (ClientPrefs.middleScroll) modManager.setValue('opponentSwap', .5, playField.ID);
 				
+				continue;
+			}
+			
+			if (ClientPrefs.middleScroll || !ClientPrefs.opponentStrums)
+			{
 				playField.visible = false;
 				
 				modManager.setValue('alpha', 1, playField.ID);
-			}
-		}
-		
-		if (!ClientPrefs.opponentLaneUnderlay)
-		{
-			for (i => playField in playFields)
-			{
-				if (playField.isPlayer) continue;
-				
-				playField.underlay.kill();
 			}
 		}
 		
@@ -1098,14 +1093,15 @@ class PlayState extends MusicBeatState
 			
 			final auto = (lane != 0 || cpuControlled);
 			
-			var strums = new PlayField(0, 0, SONG.keys, character, isPlayer, auto, lane, arrowSkins[lane]);
-			// strums.scale = NoteUtil.getSkinFromID(lane).scale;
+			var baseY:Float = ModManager.getBaseY();
+			if (ClientPrefs.downScroll) baseY = (FlxG.height - baseY);
+			
+			var strums = new PlayField(ModManager.getCenterX(ClientPrefs.middleScroll ? -1 : lane, SONG.keys), baseY, SONG.keys, character, isPlayer, auto, lane, arrowSkins[lane]);
+			
 			scripts.call('preReceptorGeneration', [strums, lane]);
 			strums.generateReceptors();
-			strums.ID = lane;
 			
 			playFields.add(strums);
-			underlays.add(strums.underlay);
 			
 			strums.onNoteHit.add((note, field) -> {
 				setFocusPlayerFromNote(note);

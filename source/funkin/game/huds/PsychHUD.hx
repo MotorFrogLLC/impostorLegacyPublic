@@ -33,13 +33,14 @@ class PsychHUD extends BaseHUD
 	var updateIconScale:Bool = true;
 	var updateIconAnimation:Bool = true;
 	
-	var pixelZoom:Float = 6;
+	var pixelZoom:Float = 3;
 	
 	public var minCombos:Int = 3;
 	public var ratingPop:Float = (.785 / .7); // tuff numbers bro
 	public var combosPop:Float = (.6 / .5);
-	public var ratingScale:Float = .7;
-	public var combosScale:Float = .5;
+	public var ratingScale:Float = .42;
+	public var combosScale:Float = .33;
+	public var combosPadding:Float = -30;
 	
 	var scoreNames:Array<String> = [];
 	
@@ -56,7 +57,6 @@ class PsychHUD extends BaseHUD
 		healthBar.leftToRight = false;
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
-		reloadHealthBarColors();
 		add(healthBar);
 		
 		iconP1 = new HealthIcon(parent.boyfriend.healthIcon, true);
@@ -76,6 +76,8 @@ class PsychHUD extends BaseHUD
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
+		
+		reloadHealthBarColors();
 		
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
 		timeTxt = new FlxText(0, 19, FlxG.width, "", 32);
@@ -118,6 +120,7 @@ class PsychHUD extends BaseHUD
 		{
 			ratingPrefix = 'pixelUI/';
 			ratingSuffix = '-pixel';
+			combosPadding = 0;
 			
 			ratingScale = combosScale = pixelZoom;
 		}
@@ -288,23 +291,21 @@ class PsychHUD extends BaseHUD
 	{
 		if (ClientPrefs.hideHud) return;
 		
-		final posX = FlxG.width * 0.35;
-		
 		if (showRating)
 		{
 			ratingGraphic.alpha = 1;
 			ratingGraphic.loadGraphic(Paths.image(ratingPrefix + ratingImage + ratingSuffix));
-			ratingGraphic.screenCenter();
-			ratingGraphic.x = posX - 40;
-			ratingGraphic.y -= 60;
 			
 			if (PlayState.isPixelStage) ratingGraphic.antialiasing = false;
 			
 			ratingGraphic.scale.set(ratingScale * ratingPop, ratingScale * ratingPop);
 			ratingGraphic.updateHitbox();
 			
-			FlxTween.cancelTweensOf(ratingGraphic, ['alpha']);
+			ratingGraphic.x = ((FlxG.width - ratingGraphic.width) / 2 + parent.comboX);
+			ratingGraphic.y = ((FlxG.height / 2) + parent.comboY - ratingGraphic.height + 10);
+			
 			FlxTween.cancelTweensOf(ratingGraphic.scale);
+			FlxTween.cancelTweensOf(ratingGraphic, ['alpha']);
 			FlxTween.tween(ratingGraphic.scale, {x: ratingScale, y: ratingScale}, 0.5, {ease: FlxEase.expoOut});
 			FlxTween.tween(ratingGraphic, {alpha: 0}, 0.5, {startDelay: Conductor.stepCrotchet * 0.01, ease: FlxEase.expoOut});
 		}
@@ -322,27 +323,34 @@ class PsychHUD extends BaseHUD
 			while (separatedScore.length < minCombos)
 				separatedScore.unshift(0);
 				
+			var totalWidth:Float = 0;
 			for (i => d in separatedScore)
 			{
 				var numScore:FlxSprite = ratingNumGroup.recycle(FlxSprite);
 				numScore.loadGraphic(Paths.image(ratingPrefix + 'num' + d + ratingSuffix));
 				numScore.alpha = 1;
-				numScore.screenCenter();
-				numScore.x = posX + (43 * i) - 90;
-				numScore.y += 80;
-				numScore.revive();
 				
 				if (PlayState.isPixelStage) numScore.antialiasing = false;
 				
 				numScore.scale.set(combosScale * combosPop, combosScale * combosPop);
 				numScore.updateHitbox();
 				
-				FlxTween.cancelTweensOf(numScore, ['alpha']);
 				FlxTween.cancelTweensOf(numScore.scale);
+				FlxTween.cancelTweensOf(numScore, ['alpha']);
 				FlxTween.tween(numScore.scale, {x: combosScale, y: combosScale}, 0.5, {ease: FlxEase.expoOut});
 				FlxTween.tween(numScore, {alpha: 0}, 0.5, {startDelay: Conductor.stepCrotchet * 0.01, ease: FlxEase.expoOut});
 				
-				ratingNumGroup.add(numScore);
+				numScore.x = (FlxG.width / 2 + parent.comboX + totalWidth);
+				numScore.y = (FlxG.height / 2 + parent.comboY + 10);
+				
+				totalWidth += ((numScore.frameWidth + (i < separatedScore.length - 1 ? combosPadding : 0)) * combosScale);
+			}
+			
+			for (numScore in ratingNumGroup)
+			{
+				if (!numScore.alive) continue;
+				
+				numScore.x -= (totalWidth * .5);
 			}
 		}
 	}

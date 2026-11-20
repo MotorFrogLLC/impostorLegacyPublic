@@ -67,7 +67,7 @@ Current version: **1.1.2**
 
 ### Changes
 - Game has been buffed.
-- Refactored Freeplay menu code
+- Refactored Freeplay menu and HUD code
 - Fixed BPM desync issues in Chart Editor
 - Optimized code and assets for more stages
 - Cosmicube node images are now only loaded when on screen.
