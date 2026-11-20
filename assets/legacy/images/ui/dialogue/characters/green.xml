@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created with Funkin Packer v0.1.3 https://neeeoo.github.io/funkin-packer/
+Created with Heroic Packer v0.1.7 https://heroicpacker.heroeyad.dev/
 -->
-<TextureAtlas imagePath="green.png" width="1550" height="1628">
-	<SubTexture name="GC excited0000" x="1111" y="1119" width="223" height="195" rotated="true" frameX="-0" frameY="-4" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC excited0001" x="952" y="233" width="190" height="226" frameX="-1" frameY="-0" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC excited0002" x="1363" y="0" width="187" height="223" frameX="-1" frameY="-0" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC excited0003" x="0" y="1441" width="222" height="187" rotated="true" frameX="-1" frameY="-0" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC excited0004" x="454" y="1438" width="220" height="188" rotated="true" frameX="-1" frameY="-0" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC excited0005" x="1335" y="1369" width="197" height="220" frameX="-0" frameY="-4" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC excited0006" x="772" y="0" width="197" height="228" frameX="-0" frameY="-0" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC excited0007" x="952" y="464" width="197" height="226" frameX="-0" frameY="-0" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC excited0008" x="1162" y="0" width="196" height="224" frameX="-0" frameY="-0" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC excited0009" x="1162" y="0" width="196" height="224" frameX="-0" frameY="-0" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC excited0010" x="1337" y="229" width="198" height="223" frameX="-0" frameY="-1" frameWidth="199" frameHeight="228"/>
-	<SubTexture name="GC happy0000" x="1343" y="457" width="186" height="223" frameX="-0" frameY="-2" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0001" x="1147" y="232" width="185" height="224" frameX="-0" frameY="-1" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0002" x="1154" y="461" width="184" height="224" frameX="-1" frameY="-0" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0003" x="693" y="1230" width="183" height="222" frameX="-1" frameY="-0" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0004" x="881" y="1299" width="222" height="182" rotated="true" frameX="-1" frameY="-0" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0005" x="1343" y="685" width="182" height="223" frameX="-1" frameY="-0" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0006" x="1154" y="690" width="184" height="224" frameX="-0" frameY="-1" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0007" x="1343" y="457" width="186" height="223" frameX="-0" frameY="-2" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0008" x="952" y="695" width="187" height="226" frameX="-0" frameY="-0" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0009" x="1112" y="926" width="224" height="188" rotated="true" frameX="-0" frameY="-0" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0010" x="1112" y="926" width="224" height="188" rotated="true" frameX="-0" frameY="-0" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC happy0011" x="0" y="1249" width="224" height="187" rotated="true" frameX="-0" frameY="-0" frameWidth="188" frameHeight="226"/>
-	<SubTexture name="GC nervous0000" x="538" y="537" width="229" height="175" rotated="true" frameX="-0" frameY="-3" frameWidth="175" frameHeight="232"/>
-	<SubTexture name="GC nervous0001" x="540" y="301" width="175" height="231" frameX="-0" frameY="-1" frameWidth="175" frameHeight="232"/>
-	<SubTexture name="GC nervous0002" x="0" y="696" width="230" height="175" rotated="true" frameX="-0" frameY="-0" frameWidth="175" frameHeight="232"/>
-	<SubTexture name="GC nervous0003" x="720" y="301" width="175" height="228" frameX="-0" frameY="-0" frameWidth="175" frameHeight="232"/>
-	<SubTexture name="GC nervous0004" x="233" y="876" width="227" height="175" rotated="true" frameX="-0" frameY="-0" frameWidth="175" frameHeight="232"/>
-	<SubTexture name="GC nervous0005" x="772" y="534" width="175" height="228" frameX="-0" frameY="-0" frameWidth="175" frameHeight="232"/>
-	<SubTexture name="GC nervous0006" x="235" y="696" width="229" height="175" rotated="true" frameX="-0" frameY="-2" frameWidth="175" frameHeight="232"/>
-	<SubTexture name="GC threatening0000" x="882" y="1110" width="224" height="184" rotated="true" frameX="-0" frameY="-0" frameWidth="184" frameHeight="224"/>
-	<SubTexture name="GC threatening0001" x="882" y="1110" width="224" height="184" rotated="true" frameX="-0" frameY="-0" frameWidth="184" frameHeight="224"/>
-	<SubTexture name="GC threatening0002" x="229" y="1249" width="224" height="184" rotated="true" frameX="-0" frameY="-0" frameWidth="184" frameHeight="224"/>
-	<SubTexture name="GC threatening0003" x="229" y="1249" width="224" height="184" rotated="true" frameX="-0" frameY="-0" frameWidth="184" frameHeight="224"/>
-	<SubTexture name="GC threatening0004" x="458" y="1247" width="224" height="184" rotated="true" frameX="-0" frameY="-0" frameWidth="184" frameHeight="224"/>
-	<SubTexture name="GC threatening0005" x="458" y="1247" width="224" height="184" rotated="true" frameX="-0" frameY="-0" frameWidth="184" frameHeight="224"/>
-	<SubTexture name="GI happy0000" x="0" y="1064" width="226" height="180" rotated="true" frameX="-0" frameY="-3" frameWidth="181" frameHeight="230"/>
-	<SubTexture name="GI happy0001" x="882" y="926" width="225" height="179" rotated="true" frameX="-0" frameY="-3" frameWidth="181" frameHeight="230"/>
-	<SubTexture name="GI happy0002" x="231" y="1064" width="226" height="178" rotated="true" frameX="-0" frameY="-0" frameWidth="181" frameHeight="230"/>
-	<SubTexture name="GI happy0003" x="1343" y="913" width="179" height="223" frameX="-0" frameY="-0" frameWidth="181" frameHeight="230"/>
-	<SubTexture name="GI happy0004" x="1108" y="1319" width="222" height="179" rotated="true" frameX="-0" frameY="-0" frameWidth="181" frameHeight="230"/>
-	<SubTexture name="GI happy0005" x="227" y="1441" width="222" height="181" rotated="true" frameX="-0" frameY="-0" frameWidth="181" frameHeight="230"/>
-	<SubTexture name="GI happy0006" x="1339" y="1141" width="180" height="223" frameX="-0" frameY="-1" frameWidth="181" frameHeight="230"/>
-	<SubTexture name="GI neutral0000" x="0" y="464" width="297" height="227" frameX="-0" frameY="-2" frameWidth="303" frameHeight="230"/>
-	<SubTexture name="GI neutral0001" x="540" y="0" width="227" height="296" rotated="true" frameX="-0" frameY="-1" frameWidth="303" frameHeight="230"/>
-	<SubTexture name="GI neutral0002" x="0" y="231" width="302" height="228" frameX="-0" frameY="-0" frameWidth="303" frameHeight="230"/>
-	<SubTexture name="GI neutral0003" x="308" y="0" width="227" height="302" rotated="true" frameX="-0" frameY="-0" frameWidth="303" frameHeight="230"/>
-	<SubTexture name="GI neutral0004" x="308" y="0" width="227" height="302" rotated="true" frameX="-0" frameY="-0" frameWidth="303" frameHeight="230"/>
-	<SubTexture name="GI neutral0005" x="0" y="0" width="303" height="226" frameX="-0" frameY="-0" frameWidth="303" frameHeight="230"/>
-	<SubTexture name="GI neutral0006" x="307" y="307" width="226" height="297" rotated="true" frameX="-0" frameY="-1" frameWidth="303" frameHeight="230"/>
-	<SubTexture name="GI upset0000" x="469" y="767" width="185" height="227" frameX="-0" frameY="-2" frameWidth="185" frameHeight="230"/>
-	<SubTexture name="GI upset0001" x="659" y="767" width="185" height="227" frameX="-0" frameY="-1" frameWidth="185" frameHeight="230"/>
-	<SubTexture name="GI upset0002" x="0" y="876" width="228" height="183" rotated="true" frameX="-0" frameY="-0" frameWidth="185" frameHeight="230"/>
-	<SubTexture name="GI upset0003" x="974" y="0" width="183" height="227" frameX="-0" frameY="-0" frameWidth="185" frameHeight="230"/>
-	<SubTexture name="GI upset0004" x="974" y="0" width="183" height="227" frameX="-0" frameY="-0" frameWidth="185" frameHeight="230"/>
-	<SubTexture name="GI upset0005" x="462" y="1056" width="226" height="183" rotated="true" frameX="-0" frameY="-0" frameWidth="185" frameHeight="230"/>
-	<SubTexture name="GI upset0006" x="693" y="999" width="184" height="226" frameX="-0" frameY="-1" frameWidth="185" frameHeight="230"/>
+<TextureAtlas imagePath="green.png" width="3302" height="695" spritePadding="3" borderPadding="1">
+	<SubTexture name="GC excited0000" x="1" y="1" width="195" height="223" frameX="0" frameY="-4" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC excited0001" x="199" y="1" width="190" height="226" frameX="-1" frameY="0" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC excited0002" x="392" y="1" width="187" height="223" frameX="-1" frameY="0" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC excited0003" x="582" y="1" width="187" height="222" frameX="-1" frameY="0" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC excited0004" x="772" y="1" width="188" height="220" frameX="-1" frameY="0" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC excited0005" x="963" y="1" width="197" height="220" frameX="0" frameY="-4" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC excited0006" x="1163" y="1" width="197" height="228" frameX="0" frameY="0" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC excited0007" x="1363" y="1" width="197" height="226" frameX="0" frameY="0" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC excited0008" x="1563" y="1" width="196" height="224" frameX="0" frameY="0" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC excited0009" x="1563" y="1" width="196" height="224" frameX="0" frameY="0" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC excited0010" x="1762" y="1" width="198" height="223" frameX="0" frameY="-1" frameWidth="199" frameHeight="228"/>
+	<SubTexture name="GC happy0000" x="1963" y="1" width="186" height="223" frameX="0" frameY="-2" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0001" x="2152" y="1" width="185" height="224" frameX="0" frameY="-1" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0002" x="2340" y="1" width="184" height="224" frameX="-1" frameY="0" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0003" x="2527" y="1" width="183" height="222" frameX="-1" frameY="0" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0004" x="2713" y="1" width="182" height="222" frameX="-1" frameY="0" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0005" x="2898" y="1" width="182" height="223" frameX="-1" frameY="0" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0006" x="3083" y="1" width="184" height="224" frameX="0" frameY="-1" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0007" x="1963" y="1" width="186" height="223" frameX="0" frameY="-2" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0008" x="1" y="232" width="187" height="226" frameX="0" frameY="0" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0009" x="191" y="232" width="188" height="224" frameX="0" frameY="0" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0010" x="191" y="232" width="188" height="224" frameX="0" frameY="0" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC happy0011" x="382" y="232" width="187" height="224" frameX="0" frameY="0" frameWidth="188" frameHeight="226"/>
+	<SubTexture name="GC nervous0000" x="572" y="232" width="175" height="229" frameX="0" frameY="-3" frameWidth="175" frameHeight="232"/>
+	<SubTexture name="GC nervous0001" x="750" y="232" width="175" height="231" frameX="0" frameY="-1" frameWidth="175" frameHeight="232"/>
+	<SubTexture name="GC nervous0002" x="928" y="232" width="175" height="230" frameX="0" frameY="0" frameWidth="175" frameHeight="232"/>
+	<SubTexture name="GC nervous0003" x="1106" y="232" width="175" height="228" frameX="0" frameY="0" frameWidth="175" frameHeight="232"/>
+	<SubTexture name="GC nervous0004" x="1284" y="232" width="175" height="227" frameX="0" frameY="0" frameWidth="175" frameHeight="232"/>
+	<SubTexture name="GC nervous0005" x="1462" y="232" width="175" height="228" frameX="0" frameY="0" frameWidth="175" frameHeight="232"/>
+	<SubTexture name="GC nervous0006" x="1640" y="232" width="175" height="229" frameX="0" frameY="-2" frameWidth="175" frameHeight="232"/>
+	<SubTexture name="GC threatening0000" x="1818" y="232" width="184" height="224" frameX="0" frameY="0" frameWidth="184" frameHeight="224"/>
+	<SubTexture name="GC threatening0001" x="1818" y="232" width="184" height="224" frameX="0" frameY="0" frameWidth="184" frameHeight="224"/>
+	<SubTexture name="GC threatening0002" x="2005" y="232" width="184" height="224" frameX="0" frameY="0" frameWidth="184" frameHeight="224"/>
+	<SubTexture name="GC threatening0003" x="2005" y="232" width="184" height="224" frameX="0" frameY="0" frameWidth="184" frameHeight="224"/>
+	<SubTexture name="GC threatening0004" x="2192" y="232" width="184" height="224" frameX="0" frameY="0" frameWidth="184" frameHeight="224"/>
+	<SubTexture name="GC threatening0005" x="2192" y="232" width="184" height="224" frameX="0" frameY="0" frameWidth="184" frameHeight="224"/>
+	<SubTexture name="GI happy0000" x="2379" y="232" width="180" height="226" frameX="0" frameY="-3" frameWidth="181" frameHeight="230"/>
+	<SubTexture name="GI happy0001" x="2562" y="232" width="179" height="225" frameX="0" frameY="-3" frameWidth="181" frameHeight="230"/>
+	<SubTexture name="GI happy0002" x="2744" y="232" width="178" height="226" frameX="0" frameY="0" frameWidth="181" frameHeight="230"/>
+	<SubTexture name="GI happy0003" x="2925" y="232" width="179" height="223" frameX="0" frameY="0" frameWidth="181" frameHeight="230"/>
+	<SubTexture name="GI happy0004" x="3107" y="232" width="179" height="222" frameX="0" frameY="0" frameWidth="181" frameHeight="230"/>
+	<SubTexture name="GI happy0005" x="1" y="466" width="181" height="222" frameX="0" frameY="0" frameWidth="181" frameHeight="230"/>
+	<SubTexture name="GI happy0006" x="185" y="466" width="180" height="223" frameX="0" frameY="-1" frameWidth="181" frameHeight="230"/>
+	<SubTexture name="GI neutral0000" x="368" y="466" width="297" height="227" frameX="0" frameY="-2" frameWidth="303" frameHeight="230"/>
+	<SubTexture name="GI neutral0001" x="668" y="466" width="296" height="227" frameX="0" frameY="-1" frameWidth="303" frameHeight="230"/>
+	<SubTexture name="GI neutral0002" x="967" y="466" width="302" height="228" frameX="0" frameY="0" frameWidth="303" frameHeight="230"/>
+	<SubTexture name="GI neutral0003" x="1272" y="466" width="302" height="227" frameX="0" frameY="0" frameWidth="303" frameHeight="230"/>
+	<SubTexture name="GI neutral0004" x="1272" y="466" width="302" height="227" frameX="0" frameY="0" frameWidth="303" frameHeight="230"/>
+	<SubTexture name="GI neutral0005" x="1577" y="466" width="303" height="226" frameX="0" frameY="0" frameWidth="303" frameHeight="230"/>
+	<SubTexture name="GI neutral0006" x="1883" y="466" width="297" height="226" frameX="0" frameY="-1" frameWidth="303" frameHeight="230"/>
+	<SubTexture name="GI upset0000" x="2183" y="466" width="185" height="227" frameX="0" frameY="-2" frameWidth="185" frameHeight="230"/>
+	<SubTexture name="GI upset0001" x="2371" y="466" width="185" height="227" frameX="0" frameY="-1" frameWidth="185" frameHeight="230"/>
+	<SubTexture name="GI upset0002" x="2559" y="466" width="183" height="228" frameX="0" frameY="0" frameWidth="185" frameHeight="230"/>
+	<SubTexture name="GI upset0003" x="2745" y="466" width="183" height="227" frameX="0" frameY="0" frameWidth="185" frameHeight="230"/>
+	<SubTexture name="GI upset0004" x="2745" y="466" width="183" height="227" frameX="0" frameY="0" frameWidth="185" frameHeight="230"/>
+	<SubTexture name="GI upset0005" x="2931" y="466" width="183" height="226" frameX="0" frameY="0" frameWidth="185" frameHeight="230"/>
+	<SubTexture name="GI upset0006" x="3117" y="466" width="184" height="226" frameX="0" frameY="-1" frameWidth="185" frameHeight="230"/>
 </TextureAtlas>
