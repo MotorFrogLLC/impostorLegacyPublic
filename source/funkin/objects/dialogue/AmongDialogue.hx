@@ -1,5 +1,7 @@
 package funkin.objects.dialogue;
 
+import funkin.input.TurboControl;
+
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxSignal;
 
@@ -31,6 +33,10 @@ class AmongDialogue extends FlxSpriteGroup
 	public var canInput:Bool = true;
 	public var curBubble:Int = -1;
 	
+	var turboGroup:TurboControlGroup;
+	var controlDOWN:TurboControl = TurboControl.fromControl('ui_down');
+	var controlUP:TurboControl = TurboControl.fromControl('ui_up');
+	
 	var rtl:Bool = Lang.hasSpecial('rightToLeft');
 	
 	var controls:funkin.input.Controls;
@@ -40,6 +46,10 @@ class AmongDialogue extends FlxSpriteGroup
 		super();
 		
 		controls = funkin.input.Controls.instance;
+		
+		turboGroup = new TurboControlGroup();
+		turboGroup.add(controlDOWN);
+		turboGroup.add(controlUP);
 		
 		boxBack = cast new FunkinSprite().loadGraphic(Paths.image('ui/dialogue/dialogueBoxBack'));
 		box = cast new funkin.objects.RGBSprite().loadGraphic(Paths.image('ui/dialogue/dialogueBox'));
@@ -59,6 +69,7 @@ class AmongDialogue extends FlxSpriteGroup
 	
 	public override function update(elapsed:Float):Void
 	{
+		turboGroup.update(elapsed);
 		super.update(elapsed);
 		
 		if (FlxG.mouse.justPressed && FlxG.mouse.y >= box.y)
@@ -74,7 +85,7 @@ class AmongDialogue extends FlxSpriteGroup
 		
 		var yy:Float = (logGroup.y + bubbleY);
 		
-		if (curBubble == logGroup.length - 1)
+		if (logGroup.length > 1 && curBubble == logGroup.length - 1)
 		{
 			var lastBubble = logGroup.members[logGroup.length - 1];
 			yy = (Math.min(box.y + box.height - bubbleY, FlxG.height) - logGroup.height - bubblePadding);//Math.min(logGroup.y + logGroup.height, FlxG.height);
@@ -102,8 +113,8 @@ class AmongDialogue extends FlxSpriteGroup
 		
 		if (canInput)
 		{
-			if (controls.UI_UP_P || FlxG.mouse.wheel > 0) scroll(-1);
-			if (controls.UI_DOWN_P || FlxG.mouse.wheel < 0) scroll(1);
+			if (controlUP.PRESSED || FlxG.mouse.wheel > 0) scroll(-1);
+			if (controlDOWN.PRESSED || FlxG.mouse.wheel < 0) scroll(1);
 			
 			if (curBubble == -1)
 			{
@@ -155,8 +166,18 @@ class AmongDialogue extends FlxSpriteGroup
 		
 		curBubble += mod;
 		
-		if (curBubble < 0) curBubble = 0;
-		if (curBubble >= logGroup.length) curBubble = (logGroup.length - 1);
+		if (curBubble < 0)
+		{
+			curBubble = 0;
+		}
+		if (curBubble >= logGroup.length)
+		{
+			curBubble = (logGroup.length - 1);
+		}
+		else if (mod != 0)
+		{
+			FlxG.sound.play(Paths.sound('hover'), .6);
+		}
 		
 		logGroup.members[curBubble].bubble.color = FlxColor.LIME;
 	}
