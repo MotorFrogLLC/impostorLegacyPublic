@@ -15,11 +15,6 @@ class AmongDialogueCharacterGroup extends flixel.group.FlxSpriteGroup.FlxTypedSp
 		1 => FlxPoint.get(0, 50),
 		2 => FlxPoint.get(50, 0),
 	];
-	public var sideZIndex:Map<Int, Int> = [
-		0 => 10,
-		1 => 0,
-		2 => 15
-	];
 	
 	public function preload(character:String):AmongDialogueCharacter
 	{
@@ -48,9 +43,6 @@ class AmongDialogueCharacterGroup extends flixel.group.FlxSpriteGroup.FlxTypedSp
 			char.y += offset.y;
 		}
 		
-		char.zIndex = (char.data.zIndex ?? sideZIndex.get(char.side) ?? 5);
-		sort(SortUtil.sortByZ);
-		
 		char.x -= Math.round(char.width / 2);
 		char.y -= char.height;
 		
@@ -60,6 +52,7 @@ class AmongDialogueCharacterGroup extends flixel.group.FlxSpriteGroup.FlxTypedSp
 		var current:AmongDialogueCharacter = activeCharacters.get(char.side);
 		
 		activeCharacters.set(char.side, char);
+		sort(SortUtil.sortByZ);
 		
 		if (current != char)
 		{

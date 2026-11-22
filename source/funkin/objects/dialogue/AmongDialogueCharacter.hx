@@ -35,13 +35,14 @@ typedef AmongDialogueCharacterAnim =
 
 class AmongDialogueCharacter extends FunkinSprite
 {
+	public var curCharacter:String = 'unknown';
 	public var data:AmongDialogueCharacterFile;
 	
 	public var titleName:String = '???';
 	public var icon:String = 'unknown';
 	
 	public var side:Int = 1;
-	public var positionOffset:FlxPoint;
+	public var positionOffset:FlxPoint = FlxPoint.get();
 	public var transitionOffset:Null<FlxPoint> = null;
 	
 	public var boxColor:FlxColor;
@@ -54,12 +55,10 @@ class AmongDialogueCharacter extends FunkinSprite
 	public function new(character:String)
 	{
 		super();
-		positionOffset = FlxPoint.get();
 		
-		load(character);
+		loadCharacter(character);
 		
 		animation.onFinish.add((anim:String) -> if (hasAnim('$anim-loop')) playAnim('$anim-loop', true));
-		
 		animation.onLoop.add((anim:String) -> {
 			if (speaking) return;
 			
@@ -74,16 +73,32 @@ class AmongDialogueCharacter extends FunkinSprite
 		});
 	}
 	
-	public function load(file:String):AmongDialogueCharacter
+	public function loadCharacter(file:String, force:Bool = false):AmongDialogueCharacter
 	{
+		if (curCharacter == file && !force) return this;
+		
 		final path:String = Paths.getPath('data/dialogue/$file.json', null, PathsTestMode.NORMAL);
 		data = (FunkinAssets.exists(path) ? FunkinAssets.parseJson5(FunkinAssets.getContent(path)) : null);
 		
 		if (data == null) return this;
 		
+		curCharacter = file;
+		
+		return loadFile(data);
+	}
+	
+	public function loadFile(data:AmongDialogueCharacterFile):AmongDialogueCharacter
+	{
 		icon = data.icon;
 		side = data.side;
 		titleName = data.name;
+		zIndex = (data.zIndex ?? switch(side)
+		{
+			case 0: 10;
+			case 1: 0;
+			case 2: 15;
+			default: 5;
+		});
 		
 		if (data.offsets != null) positionOffset.set(data.offsets[0], data.offsets[1]);
 		if (data.transitionOffset != null) transitionOffset = FlxPoint.get(data.transitionOffset[0], data.transitionOffset[1]);

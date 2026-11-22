@@ -1,7 +1,5 @@
 package funkin.objects.dialogue;
 
-using StringTools;
-
 import flixel.addons.text.FlxTypeText;
 import flixel.util.FlxSignal;
 
@@ -130,10 +128,23 @@ class AmongDialogueBubble extends flixel.group.FlxSpriteGroup
 		}
 	}
 	
-	public function play(line:String):Void
+	public inline function play(line:String):Void
 	{
+		if (line.trim().length == 0)
+		{
+			_prevText = ' '; // Im gay
+			skip();
+			return;
+		}
+		
 		dialogue.resetText(targetText = Lang.str(line, line));
 		dialogue.start(.05, true);
+	}
+	
+	public inline function skip():Void
+	{
+		dialogue.skip();
+		update(0);
 	}
 	
 	function formatArabicDialogueText(source:String):String

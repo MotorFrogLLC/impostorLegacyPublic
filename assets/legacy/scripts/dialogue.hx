@@ -18,7 +18,6 @@ public var video:FunkinVideoSprite;
 public var skipText:FlxText; // skip video text
 
 var vidPlaying:Bool = false;
-var dialogueAfter:Bool = false;
 
 var bg:flixel.system.FlxBGSprite;
 public var dialogue:AmongDialogue;
@@ -42,7 +41,7 @@ function onVidEnd()
 	camGame.visible = true;
 	skipText.visible = false;
 	// ^ for windowed fullscreen
-	if (dialogueAfter && (PlayState.isStoryMode || !videoCheckStory))
+	if (hasDialogue && (PlayState.isStoryMode || !videoCheckStory))
 	{
 		readDialogue();
 	}
@@ -54,21 +53,49 @@ function onVidEnd()
 	if (blackYnot != null) FlxTween.tween(blackYnot, {alpha: 0}, 0.5, {onComplete: function() blackYnot.kill()});
 }
 
+function prepareDialogue(?dialogueName:String)
+{
+	if ((videoCheckStory && !isStoryMode) || PlayState.seenCutscene) return false;
+	
+	final data:Array<String> = AmongDialogue.getDialogueData(songName, dialogueName);
+	if (data == null) return false;
+	
+	hasDialogue = true;
+	
+	dialogue = new AmongDialogue();
+	dialogue.setPosition(Math.round((FlxG.width - dialogue.box.width) / 2), 430);
+	dialogue.queueFromData(data);
+	
+	final dialoguePath:String = ('dialogue/' + Paths.sanitize(songName));
+	
+	if (funkin.FunkinAssets.exists(Paths.getPath('music/$dialoguePath.ogg', null, PathsTestMode.NORMAL)))
+	{
+		FlxG.sound.playMusic(Paths.music(dialoguePath));
+		FlxG.sound.music.volume = 0;
+	}
+	else
+	{
+		FlxG.sound.music?.destroy();
+		FlxG.sound.music = null;
+	}
+	
+	return true;
+}
+
 /**
 	* Loads a video cutscene basically.
 	`vid` > what video
 	`hold on a second`
 **/
-public function videoCutscene(?vid:String = 'sussus-moogus', ?dAfter:Bool, ?canSkip:Bool, ?onEnd:Void->Void, ?onFormat:Void->Void)
+public function videoCutscene(?vid:String = 'sussus-moogus', ?dialogueName:Dynamic, canSkip:Bool = true, ?onEnd:Void->Void, ?onFormat:Void->Void)
 {
 	if ((videoCheckStory && !isStoryMode) || PlayState.seenCutscene) return;
 	
-	songStartCallback = () -> return Function_Stop;
+	if (dialogue == null || dialogue.queue.length == 0) prepareDialogue(dialogueName is String ? dialogueName : null);
 	
-	skippableVideo = (canSkip ?? true); // fuck you hscript
-	dialogueAfter = (dAfter ?? true);
+	songStartCallback = function() {}
 	
-	if (!dialogueAfter) PlayState.seenCutscene = true;
+	skippableVideo = canSkip; // fuck you hscript
 	
 	blackYnot = new FlxSprite().makeScaledGraphic(FlxG.width + 3, FlxG.height, FlxColor.BLACK);
 	blackYnot.camera = camOther;
@@ -123,23 +150,21 @@ public function textFade()
 /** 
  * Run this function to read the songs/SONG_NAME/dialogue.txt file
 **/
-public function readDialogue(?dialogueName:String)
+public function readDialogue()
 {
 	if ((videoCheckStory && !isStoryMode) || PlayState.seenCutscene) return;
 	
 	if (!repeatedCutscenes) PlayState.seenCutscene = true;
 	
-	final data:Array<String> = AmongDialogue.getDialogueData(songName, dialogueName);
-	if (data == null) return;
+	if (dialogue == null || dialogue.queue.length == 0 && !prepareDialogue(dialogueName is Bool ? dialogueName : null)) return;
 	
-	hasDialogue = true;
 	songStartCallback = function() {}
 	
 	bg = new flixel.system.FlxBGSprite();
 	bg.alpha = 0;
 	
-	dialogue = new AmongDialogue();
-	dialogue.setPosition(Math.round((FlxG.width - dialogue.box.width) / 2), 430);
+	bg.cameras = [camOther];
+	dialogue.cameras = [camOther];
 	
 	dialogue.onFinish.add(closeDialogue);
 	dialogue.onCancel.add(closeDialogue);
@@ -148,25 +173,15 @@ public function readDialogue(?dialogueName:String)
 	
 	FlxTween.tween(bg, {alpha: .35}, .8, {ease: FlxEase.circIn});
 	
-	final dialoguePath:String = ('dialogue/' + Paths.sanitize(songName));
-	
-	if (funkin.FunkinAssets.exists(Paths.getPath('music/$dialoguePath.ogg', null, PathsTestMode.NORMAL)))
+	if (FlxG.sound.music != null)
 	{
-		FlxG.sound.playMusic(Paths.music(dialoguePath));
-		FlxG.sound.music.volume = 0;
 		FlxG.sound.music.fadeIn(1, 0, .8);
-	}
-	else
-	{
-		FlxG.sound.music?.stop();
+		FlxG.sound.music.play();
 	}
 	
-	bg.cameras = [camOther];
-	dialogue.cameras = [camOther];
-	
-	FlxTimer.wait(0.5, function()
+	FlxTimer.wait(.5, function()
 	{
-		dialogue.queueFromData(data);
+		dialogue.advance();
 		dialogue.y += 700;
 		add(dialogue);
 		

@@ -23,13 +23,13 @@
             "anim": "skeptical",
             "name": "Y skeptical",
             "loop": false,
-            "offsets": [0,0]
+            "offsets": [5,5]
         },
         {
             "anim": "dead",
             "name": "Y died",
             "loop": false,
-            "offsets": [0,0]
+            "offsets": [0,-80]
         },
         {
             "anim": "what",

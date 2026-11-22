@@ -23,8 +23,9 @@ class AmongDialogue extends FlxSpriteGroup
 	public var bubblePadding:Float = 10;
 	
 	public var queue:Array<AmongDialogueLine> = [];
+	var curLine:Int = 0;
 	
-	public var onAdvance:FlxTypedSignal<(line:AmongDialogueLine, character:AmongDialogueCharacter) -> Void> = new FlxTypedSignal();
+	public var onAdvance:FlxTypedSignal<(line:AmongDialogueLine, character:AmongDialogueCharacter, i:Int) -> Void> = new FlxTypedSignal();
 	public var onFinish:FlxTypedSignal<Void -> Void> = new FlxTypedSignal();
 	public var onCancel:FlxTypedSignal<Void -> Void> = new FlxTypedSignal();
 	public var canInput:Bool = true;
@@ -124,6 +125,8 @@ class AmongDialogue extends FlxSpriteGroup
 	
 	public function queueFromData(data:Array<String>, preload:Bool = true):Void
 	{
+		curLine = 0;
+		
 		for (line in data)
 		{
 			var info:Array<String> = line.split(':');
@@ -133,17 +136,15 @@ class AmongDialogue extends FlxSpriteGroup
 				character: info[0],
 				expression: info[1],
 				line: info[2]
-			});
-			
-			if (preload) characters.preload(info[0]);
+			}, preload);
 		}
 	}
 	
-	public function queueLine(line:AmongDialogueLine):AmongDialogueLine
+	public function queueLine(line:AmongDialogueLine, preload:Bool = true):AmongDialogueLine
 	{
 		queue.push(line);
-		
-		if (logGroup.length == 0) advance();
+			
+		if (line.character != null && preload) characters.preload(line.character);
 		
 		return line;
 	}
@@ -165,7 +166,7 @@ class AmongDialogue extends FlxSpriteGroup
 	{
 		if (!force && logGroup.length > 0 && logGroup.members[0].dialogue._typing)
 		{
-			logGroup.members[0].dialogue.skip();
+			logGroup.members[0].skip();
 			return false;
 		}
 		
@@ -183,7 +184,8 @@ class AmongDialogue extends FlxSpriteGroup
 		
 		if (line.line != null) addBubble(line.line, currentSpeaker.titleName, currentSpeaker.icon, line.rightToLeft);
 		
-		if (onAdvance != null) onAdvance.dispatch(line, currentSpeaker);
+		if (onAdvance != null) onAdvance.dispatch(line, currentSpeaker, curLine);
+		curLine ++;
 		
 		if (line.line == null) return advance();
 		
@@ -219,13 +221,13 @@ class AmongDialogue extends FlxSpriteGroup
 	
 	public function addBubble(line:String = 'Hello world!', dialogueName:String = 'red', iconName:String = 'red', ?rightToLeft:Bool):AmongDialogueBubble
 	{
-		var speaker:AmongDialogueCharacter = currentSpeaker;
+		final speaker:AmongDialogueCharacter = currentSpeaker;
 		
 		final bubble:AmongDialogueBubble = logGroup.insert(0, new AmongDialogueBubble(92, bubbleY - 5, dialogueName, iconName, rightToLeft ?? rtl));
 		bubble.play(line);
 		
-		bubble.dialogue.sounds = currentSpeaker.sounds;
-		bubble.dialogue.completeCallback = () -> speaker.speaking = false;
+		bubble.dialogue.sounds = speaker.sounds;
+		bubble.onFinish.addOnce((_) -> speaker.speaking = false);
 		
 		return bubble;
 	}
