@@ -45,6 +45,15 @@ Current version: **1.1.2**
 - Moved Hscript backend from Iris to Insanity
 	- Scripted classes / enums / abstracts are now supported
 	- Some missing Haxe syntax features are now supported
+- Refactored a lot of interface code for convenience
+	- ex. Freeplay, Dialogue, UI code
+- Dialogue is more flexible
+	- Conversation history can now be scrolled through
+	- Can now properly handle more than 3 dialogue characters at once
+	- Bubbles will now stretch to fit text content (instead of squishing the text)
+	- Dialogue characters pivots are now in the bottom center instead of top left
+	- `"sound"` in dialogue characters can now optionally hold an array of sounds for variation
+	- Fields `"scale"`, `"no_antialiasing"`, `"flipX"`, `"zIndex"`, `"offsets"` (like "position") now supported in dialogue characters
 - Additional utility functions are now included in runtime shaders (see `funkin.game.shaders.PostEffectShader`)
 - `taskGroup` is now created on init (song scripts should be able to toy around with it better now)
 - Custom awards can now be added (WIP)
@@ -67,8 +76,7 @@ Current version: **1.1.2**
 
 ### Changes
 - Game has been buffed.
-- Refactored Freeplay menu and HUD code
-- Fixed BPM desync issues in Chart Editor
+- Rewritten input system for performance and gamepad responsiveness
 - Optimized code and assets for more stages
 - Cosmicube node images are now only loaded when on screen.
 	- Entering the menu should now be less memory intensive.
@@ -83,6 +91,7 @@ Current version: **1.1.2**
 ### Bugfixes
 - Fixed note pooling system
 - Icons readded to cosmicube items
+- Fixed BPM desync issues in Chart Editor
 - Fixed camera cutoff when using Camera Twist event
 - Mods with weeks hidden in Story Mode no longer require song completion by default (rendering them inaccessible without dev flags)
 - Fixed a game breaking issue when opening the Credits during a modded song.

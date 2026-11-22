@@ -118,10 +118,10 @@ class AmongDialogueCharacter extends FunkinSprite
 		{
 			sounds.push(FlxG.sound.load(Paths.sound('dialogue/${data.sound}'), .6));
 		}
-		else
+		else if (data.sound != null)
 		{
 			var sound:Array<String> = cast data.sound;
-			for (sound in sound) sounds.push(FlxG.sound.load(Paths.sound('dialogue/${data.sound}'), .6));
+			for (sound in sound) sounds.push(FlxG.sound.load(Paths.sound('dialogue/$sound'), .6));
 		}
 		
 		for (anim in data.animations)
