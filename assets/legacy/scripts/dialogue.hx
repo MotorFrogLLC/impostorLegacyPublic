@@ -37,6 +37,7 @@ function onVidEnd()
 	hideCaption();
 	
 	video?.destroy();
+	inCutscene = false;
 	vidPlaying = false;
 	camGame.visible = true;
 	skipText.visible = false;
@@ -105,6 +106,7 @@ public function videoCutscene(?vid:String = 'sussus-moogus', ?dialogueName:Dynam
 	video = new FunkinVideoSprite();
 	
 	video.onFormat(() -> {
+		inCutscene = true;
 		vidPlaying = true;
 		video.camera = camOther;
 		video.setGraphicSize(0, FlxG.height);
@@ -159,6 +161,7 @@ public function readDialogue()
 	if (dialogue == null || dialogue.queue.length == 0 && !prepareDialogue(dialogueName is Bool ? dialogueName : null)) return;
 	
 	songStartCallback = function() {}
+	inCutscene = true;
 	
 	bg = new flixel.system.FlxBGSprite();
 	bg.alpha = 0;
