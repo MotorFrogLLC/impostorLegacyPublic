@@ -63,7 +63,7 @@ var camTwist:Bool = false;
 
 function onLoad()
 {
-	taskGroup = add(new funkin.objects.TaskSong(0, 200));
+	taskGroup = new funkin.objects.TaskSong(0, 200);
 	switchCredits();
 	
 	captionGroup = new FunkinCaptionGroup(500);
@@ -92,6 +92,7 @@ public function startTaskSong(revive:Bool = true):Void
 {
 	if (revive) taskGroup.revive();
 	
+	add(taskGroup);
 	taskGroup.start();
 	taskGroup.cameras = [camOther];
 }
@@ -144,14 +145,12 @@ function onMoveCamera(whosTurn:Bool)
 	
 	if (!startingSong && doCamFollow && canFollow)
 	{
-		var character = switch (whosTurn)
+		var character = (camCurTarget ?? switch (whosTurn)
 		{
 			case 'gf': gf;
 			case 'dad': (opponentStrums?.owner ?? dad);
 			default: (playerStrums?.owner ?? boyfriend);
-		}
-		
-		if (camCurTarget != null) character = camCurTarget; // used for characters that aren't player or opponent
+		});
 		
 		final displacement = character.getSingDisplacement();
 		camFollow.x += displacement.x;

@@ -11,31 +11,31 @@
         "anim": "happy",
         "name": "WI happy",
         "loop": false,
-        "offsets": [0,30]
+        "offsets": [0,0]
         },
         {
         "anim": "excite",
         "name": "WI excited",
         "loop": false,
-        "offsets": [0,30]
+        "offsets": [0,0]
         },
         {
         "anim": "disap",
         "name": "WI disappointed",
         "loop": false,
-        "offsets": [0,30]
+        "offsets": [0,0]
         },
         {
         "anim": "insane",
         "name": "WI insanity",
         "loop": false,
-        "offsets": [0,30]
+        "offsets": [0,0]
         },
         {
         "anim": "pissed",
         "name": "WI pissed",
         "loop": false,
-        "offsets": [0,30]
+        "offsets": [0,0]
         }
     ]
 }

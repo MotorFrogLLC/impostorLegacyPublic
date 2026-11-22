@@ -6,6 +6,7 @@
     "boxShadeColor": "0xFF50A5EB", 
     "icon": "bf",
     "sound": "bf",
+    "offsets": [40, 0],
     "animations": [
         {
             "anim": "happy",
@@ -35,7 +36,7 @@
             "anim": "q",
             "name": "BF q",
             "loop": false,
-            "offsets": [0,0] 
+            "offsets": [45,0] 
         },
         {
             "anim": "realization",

@@ -12,14 +12,14 @@
 			"name": "pico normal",
 			"loop": false,
 			"fps": 30,
-			"offsets": [0, 8] 
+			"offsets": [0, 0] 
 		},
 		{
 			"anim": "normal",
 			"name": "pico happy",
 			"loop": false,
 			"fps": 30,
-			"offsets": [-2, 18] 
+			"offsets": [-2, 10] 
 		}
 	]
 }

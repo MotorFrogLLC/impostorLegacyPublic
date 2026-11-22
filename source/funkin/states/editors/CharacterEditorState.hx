@@ -1509,6 +1509,8 @@ class CharacterEditorState extends UIState // MUST EXTEND UI STATE needed for ac
 	
 	override function destroy()
 	{
+		FlxG.camera.bgColor = FlxColor.BLACK;
+		
 		super.destroy();
 	}
 	

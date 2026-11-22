@@ -11,19 +11,19 @@
         "anim": "normal",
         "name": "detective normal",
         "loop": false,
-        "offsets": [0,15]
+        "offsets": [0,0]
         },
         {
         "anim": "what",
         "name": "detective what",
         "loop": false,
-        "offsets": [0,15]
+        "offsets": [0,0]
         },
         {
         "anim": "think",
         "name": "detective think",
         "loop": false,
-        "offsets": [0,15]
+        "offsets": [0,0]
         }
     ]
 }

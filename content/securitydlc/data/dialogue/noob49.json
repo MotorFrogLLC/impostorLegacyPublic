@@ -11,19 +11,19 @@
         "anim": "normal",
         "name": "noob49 normal",
         "loop": false,
-        "offsets": [0,60]
+        "offsets": [0,0]
         },
         {
         "anim": "sad",
         "name": "noob49 sad",
         "loop": false,
-        "offsets": [0,60]
+        "offsets": [0,0]
         },
         {
         "anim": "happy",
         "name": "noob49 happy",
         "loop": false,
-        "offsets": [0,60]
+        "offsets": [0,0]
         }
     ]
 }

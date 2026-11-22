@@ -6,12 +6,13 @@
     "boxShadeColor": "0xFF303349", 
     "icon": "gray",
     "sound": "grey",
+    "offsets": [0, 20],
     "animations": [
         {
         "anim": "neutral",
         "name": "GC neutral",
         "loop": false,
-        "offsets": [0,30]
+        "offsets": [0,0]
         }
     ]
 }

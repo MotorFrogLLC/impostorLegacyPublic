@@ -11,32 +11,32 @@
             "anim": "happy",
             "name": "Y happy",
             "loop": false,
-            "offsets": [0,50]
+            "offsets": [0,0]
         },
         {
             "anim": "neutral",
             "name": "Y neutral",
             "loop": false,
-            "offsets": [0,50]
+            "offsets": [0,0]
         },
         {
             "anim": "skeptical",
             "name": "Y skeptical",
             "loop": false,
-            "offsets": [0,50]
+            "offsets": [0,0]
         },
         {
             "anim": "dead",
             "name": "Y died",
             "loop": false,
-            "offsets": [0,50]
+            "offsets": [0,0]
         },
         {
             "anim": "what",
             "name": "Y what",
             "reset": false,
             "loop": false,
-            "offsets": [0,50]
+            "offsets": [0,0]
         }
     ]
 }

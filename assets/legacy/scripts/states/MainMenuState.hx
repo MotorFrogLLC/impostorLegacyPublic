@@ -3,8 +3,6 @@ import funkin.data.FinaleState;
 import funkin.data.CosmicubeData;
 import funkin.states.TitleState;
 
-import flixel.text.FlxText;
-
 function onLoad()
 {
 	if (!ClientPrefs.inDevMode) return;

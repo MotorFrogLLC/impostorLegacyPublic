@@ -5,7 +5,7 @@ import flixel.group.FlxSpriteGroup;
 class TaskSong extends FlxSpriteGroup
 {
 	public var text(default, set):String;
-	public var meta(default, set):Array<String> = ['ME', 'I MADE THE SONG'];
+	public var meta(default, set):Array<String>;
 	
 	public var fontSize:Int = 24;
 	public var borderPadding:Float = 12;
@@ -15,7 +15,7 @@ class TaskSong extends FlxSpriteGroup
 	
 	var startX:Float;
 
-	public function new(x:Float, y:Float, text:String = '')
+	public function new(x:Float, y:Float, text:String = 'ME\nI MADE THE SONG')
 	{
 		super(startX = x, y);
 		
@@ -72,7 +72,7 @@ class TaskSong extends FlxSpriteGroup
 	{
 		if (text == now) return now;
 		
-		reload(@:bypassAccessor meta = now.split('\n'));
+		reload(@:bypassAccessor meta = (text = now).split('\n'));
 		
 		return now;
 	}

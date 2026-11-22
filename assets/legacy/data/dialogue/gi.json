@@ -11,19 +11,19 @@
         "anim": "ihappy",
         "name": "GI happy",
         "loop": false,
-        "offsets": [0,20]
+        "offsets": [0,0]
         },
         {
         "anim": "ineutral",
         "name": "GI neutral",
         "loop": false,
-        "offsets": [0,20]
+        "offsets": [0,0]
         },
         {
         "anim": "iupset",
         "name": "GI upset",
         "loop": false,
-        "offsets": [0,20]
+        "offsets": [0,0]
         }
     ]
 }

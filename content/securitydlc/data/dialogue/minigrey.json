@@ -1,17 +1,18 @@
 {
     "name": "dialogue_minigrey",
-    "side": 1,
+    "side": 3,
     "asset": "minigreya",
     "boxColor": "0xFF626579",
     "boxShadeColor": "0xFF303349", 
     "icon": "miniergrey",
     "sound": "grey",
+    "offsets": [-100, -20],
     "animations": [
         {
         "anim": "kid",
         "name": "minigrey kid",
         "loop": false,
-        "offsets": [0,-210]
+        "offsets": [0,0]
         }
     ]
 }
