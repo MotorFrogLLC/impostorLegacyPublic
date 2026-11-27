@@ -25,14 +25,14 @@
         "aquarium_name": "Aquarium", //fish in an aquarium
         "aquarium_hint": "Salvato.", //because the fish got saved
         "aquarium_desc": "Respira la nuova vita!",
-        "bfweird_name": "BF Strano",
+        "bfweird_name": "BF Bizzarro",
         "bfweird_hint": "Esclusivo al DLC",
         "bfweird_desc": "Un nuovo look!", //reference to UPDOG
-        "gfweird_name": "GF Strana",
+        "gfweird_name": "GF Bizzarra",
         "gfweird_hint": "Esclusiva al DLC",
-        "gfweird_desc": "Un nuovo look!",
+        "gfweird_desc": "Non fare la strana.",
         "birdpostor_name": "Impuccello",
-        "birdpostor_hint": "Non farti beccare.",
+        "birdpostor_hint": "Ha perduto la compagna.",
         "birdpostor_desc": "Che bello uscire e dare da mangiare agli uccelli!",
         "blake_name": "Blake",
         "blake_hint": "Hakuna matata ragazzi!",
@@ -43,10 +43,7 @@
         "chefplayable_name": "Chef",
         "chefplayable_hint": "Sbloccato ricevendo un voto pari o migliore di A in Sauces Moogus.",
         "chefplayable_desc": "Dieci!",
-        "deadnoob49_name": "Novellino49 Morto",
-        "deadnoob49_hint": "Solo uno scheletro nell'armadio.",
-        "deadnoob49_desc": "Persona scompara, non più scomparsa!",
-        "detectiveplayer_name": "Detective",
+        "detectiveplayer_name": "Investigatore", //Ugo Segugio
         "detectiveplayer_hint": "Sbloccato ricevendo un voto pari o migliore di A in Suspect.",
         "detectiveplayer_desc": "Convincere quell' \"Astronauta\" a confessare è stata una vera Sfida.", //reference to Crewmate Challenge (cancelled mod)
         "evilbf_name": "BF Malvagio",
@@ -76,12 +73,12 @@
         "shit_name": "Stronzo",
         "shit_hint": "Sbloccato ricevendo un voto pari o migliore di F in Triple Threat.",
         "shit_desc": "Non è uno con cui scherzare.", //refence to a mod TRIFFLE
-        "rgbpet_name": "RGBPet",
+        "rgbpet_name": "Compagno RGB",
         "rgbpet_hint": "Personalizzazione? Nel XXI Secolo?",
         "rgbpet_desc": "Prende il colore della Barra della Vita.",
         "noob49player_name": "Novellino49",
         "noob49player_hint": "Sbloccato completando DLC Week.",
-        "noob49player_desc": "Lo giuro è stato lui.",
+        "noob49player_desc": "Giuro che è stato lui.",
         "looksie_name": "Curiosolo",
         "looksie_hint": "Diamoci due occhiate.",
         "looksie_desc": "Diamoci un'occhiata.", //both are gibberish
@@ -92,7 +89,7 @@
         "littlermungus_hint": "Crescono così in fretta... o no.",
         "littlermungus_desc": "Buon compleanno!",
         "LIMEGREENPlayable_name": "JADSPOSTOR",
-        "LIMEGREENPlayable_hint": "VERDE LIMETTA COSA???",
+        "LIMEGREENPlayable_hint": "COSA VERDE LIMETTA???",
         "LIMEGREENPlayable_desc": "JADS.",
         "kickflip_name": "David Pummel",
         "kickflip_hint": "Vontastico!", //reference to a person named Von
@@ -116,7 +113,7 @@
         "bfblack_hint": "Un ricordo lontano.",
         "bfblack_desc": "Corri.",
         //dialogue
-        "dialogue_490": "quindi è questo il dlc!",
+        "dialogue_490": "quindi è questo il pacchetto aggiuntivo!",
         "dialogue_491": "aiuto aiuto <:(",
         "dialogue_492": "dov'è mio figlio? hai visto mio figlio??",
         "dialogue_493": "è lì fre",
@@ -129,7 +126,7 @@
         "dialogue_4910": "Visto?",
         "dialogue_4911": " : (",
         "dialogue_4912": "Ma ci puoi credere? Ho un livello tutto mio ora!",
-        "dialogue_4913": "TUTTO mio!",
+        "dialogue_4913": "ESCLUSIVO a me!",
         "dialogue_4914": "si ok.",
         "dialogue_dontlied0": "fiiuu meno male che siamo riusciti a fuggire dall'Impostore Nero.",
         "dialogue_dontlied1": "aspe..............",
@@ -139,15 +136,15 @@
         "dialogue_dontlied5": "ti amo viola.",
         "dialogue_suspect0": "Guarda che disastro.", //this dialogue is unused, but might get readded in the future
         "dialogue_suspect1": "quindi...",
-        "dialogue_suspect2": "L'hai fatto tu?",
-        "dialogue_suspect3": "Eh?",
+        "dialogue_suspect2": "sei stato te?",
+        "dialogue_suspect3": "Come?",
         "dialogue_suspect4": "No, naturalmente no.",
         "dialogue_suspect5": "ok capo allora chi",
         "dialogue_suspect6": "Ho un ipotesi.",
         "dialogue_suspect7": "Credo che sia stato Nero.", //black impostor
         "dialogue_suspect8": "ma tu sei nero", //both detective and black impostor are black among us characters
         "dialogue_suspect9": "Hm...",
-        "dialogue_detective": "Detective",
+        "dialogue_detective": "Investigatore",
         "dialogue_minigrey": "Grigio Tascabile",
         "dialogue_noob49": "Novellino49",
         "dialogue_pico": "Pico",
